@@ -1,16 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-''' New module for options (algorithm configurations, hyperparameters, problem
-settings)
+''' Copyright 2022 Changwu Huang, Hao Bai and Xin Yao
+
+    Module for options (algorithm configurations, hyperparameters, and problem
+    settings)
 '''
 import numpy as np
-# internal imports
-# HB : the following imports are for personal purpose
-try:
-    import sys, IPython
-    sys.excepthook = IPython.core.ultratb.ColorTB()
-except:
-    pass
 
 
 
@@ -18,7 +13,7 @@ except:
 #!                                     CLASSES
 #!------------------------------------------------------------------------------
 class __base(object):
-    ''' :class:`__base` is the base class for anything that participates in the 
+    ''' :class:`__base` is the base class for anything that participates in the
     definition of optimization problem.
     '''
     def __init__(self, seed):
@@ -30,7 +25,7 @@ class __base(object):
         seed : None | int | instance of RandomState
             - If it is None, return the RandomState singleton used by np.random.
             - If it is an int, return a new RandomState instance seeded with seed.
-            - If it is already a RandomState instance, return it.        
+            - If it is already a RandomState instance, return it.
         '''
         self.rng = seed
 
@@ -76,7 +71,7 @@ class _Hyperparameter(__base):
     @property
     def value(self):
         return self._value
-    
+
     @value.setter
     def value(self, input):
         if input is None:
@@ -88,7 +83,7 @@ class _Hyperparameter(__base):
             for elem in input:
                 if not isinstance(elem, self.TYPE):
                     raise TypeError("Parameter '{}' must be a sequence of {},"
-                        " it cannot contain a value of {}".format(self.name, 
+                        " it cannot contain a value of {}".format(self.name,
                     self.TYPE.__name__, type(elem).__name__))
             self._values = np.array(input)
         else:
@@ -99,7 +94,7 @@ class _Hyperparameter(__base):
     @property
     def values(self):
         return self._values
-    
+
     #? HB: this may be useless
     @values.setter
     def values(self, inputs):
@@ -108,7 +103,7 @@ class _Hyperparameter(__base):
     @property
     def default(self):
         return self._default
-    
+
     @default.setter
     def default(self, value):
         self._default = value
@@ -174,7 +169,7 @@ class _Hyperparameter(__base):
         else:
             value = getattr(self.value, operator)(other.value)
             if operator == "__add__":
-                return type(self)(value, name="{} + {}".format(self.name, 
+                return type(self)(value, name="{} + {}".format(self.name,
                     other.name))
             elif operator == "__sub__":
                 return type(self)(value, name="{} - {}".format(self.name,
@@ -196,7 +191,7 @@ class _Hyperparameter(__base):
                     other.name))
             else:
                 return value
-            return 
+            return
 
     def __lt__(self, other): # <
         return self.__cmp_check(other, "__lt__")
@@ -218,22 +213,22 @@ class _Hyperparameter(__base):
 
     def __add__(self, other): # +
         return self.__cmp_check(other, "__add__")
-    
+
     def __sub__(self, other): # -
         return self.__cmp_check(other, "__sub__")
-    
+
     def __mul__(self, other): # *
         return self.__cmp_check(other, "__mul__")
-    
+
     def __truediv__(self, other): # /
         return self.__cmp_check(other, "__truediv__")
-    
+
     def __floordiv__(self, other): # //
         return self.__cmp_check(other, "__floordiv__")
-    
+
     def __mod__(self, other): # %
         return self.__cmp_check(other, "__mod__")
-    
+
     def __pow__(self, other): # **
         return self.__cmp_check(other, "__pow__")
 
@@ -324,7 +319,7 @@ class Boolean(_Hyperparameter):
 
 #*  -------------------------- Convergence Criteria --------------------------
 class StopCondition(__base):
-    
+
     def __init__(self, **kwargs):
         self._max_FES = Float(
             value=kwargs.get("max_FES"),
@@ -401,7 +396,7 @@ class StopCondition(__base):
 
 #*  ------------------------ Algorithm Configurations ------------------------
 class _ConfigureAlgorithm(__base):
-    
+
     def __init__(self, seed, N, initial_scheme, update_scheme, record_position):
         super(_ConfigureAlgorithm, self).__init__(seed)
         self._N = Integer(
@@ -441,7 +436,7 @@ class _ConfigureAlgorithm(__base):
     @property
     def N(self):
         return self._N.value
-    
+
     @N.setter
     def N(self, value):
         self._N.value = value
@@ -449,15 +444,15 @@ class _ConfigureAlgorithm(__base):
     @property
     def initial_scheme(self):
         return self._initial_scheme.value
-    
+
     @initial_scheme.setter
     def initial_scheme(self, value):
         self._initial_scheme.value = value
-    
+
     @property
     def update_scheme(self):
         return self._update_scheme.value
-    
+
     @update_scheme.setter
     def update_scheme(self, value):
         self._update_scheme.value = value
@@ -472,8 +467,8 @@ class _ConfigureAlgorithm(__base):
 
     def __repr__(self):
         return "\n".join(["`{}`: {}".format(k,v)for k,v in vars(self).items()])
-        
-    
+
+
     def set(self, attr, value, **kwargs):
         setattr(self, attr, value)
 
@@ -482,7 +477,7 @@ class DE(_ConfigureAlgorithm):
     CONFIG_NAME = "DE related configuration"
 
     def __init__(self, seed=None, N=20, F=0.75, CR=0.7,
-                 mutation="de/best/1", crossover="bin", 
+                 mutation="de/best/1", crossover="bin",
                  initial_scheme="latin_hypercube", update_scheme="immediate",
                  record_position=False,
                  generation_strategy=[{}], F_CR_pair=[{}], **kwargs):
@@ -539,20 +534,20 @@ class DE(_ConfigureAlgorithm):
             remark="A composite of scaling factor `F` and crossover rate `CR`."
                 " Each composite should be saved in a dict containing 2 keys:"
                 " `F` and `CR`.")
-    
+
     #   --------------------------- Setter/Getter ---------------------------
     @property
     def F(self):
         return self._F.value
-    
+
     @F.setter
     def F(self, value):
         self._F.value = value
-    
+
     @property
     def CR(self):
         return self._CR.value
-    
+
     @CR.setter
     def CR(self, value):
         self._CR.value = value
@@ -560,31 +555,31 @@ class DE(_ConfigureAlgorithm):
     @property
     def mutation(self):
         return self._mutation.value
-    
+
     @mutation.setter
     def mutation(self, value):
         self._mutation.value = value
-    
+
     @property
     def crossover(self):
         return self._crossover.value
-    
+
     @crossover.setter
     def crossover(self, value):
         self._crossover.value = value
-    
+
     @property
     def generation_strategy(self):
         return self._generation_strategy.values
-    
+
     @generation_strategy.setter
     def generation_strategy(self, value):
         self._generation_strategy.value = value
-    
+
     @property
     def F_CR_pair(self):
         return self._F_CR_pair.values
-    
+
     @F_CR_pair.setter
     def F_CR_pair(self, value):
         self._F_CR_pair.value = value
@@ -600,7 +595,7 @@ class CMAES(_ConfigureAlgorithm):
 
     def __init__(self, seed=None, D=None, **kwargs):
         if kwargs.get("lambd") is None: # check the nicknames
-            super().__init__(seed, kwargs.get("N"), "random", "immediate", 
+            super().__init__(seed, kwargs.get("N"), "random", "immediate",
                              False)
         else:
             super().__init__(seed, kwargs.get("lambd"), "random", "immediate",
@@ -669,7 +664,7 @@ class CMAES(_ConfigureAlgorithm):
     @D.setter
     def D(self, value):
         self._D.value = value
-    
+
     @property
     def mu(self):
         return self._mu.value
@@ -677,7 +672,7 @@ class CMAES(_ConfigureAlgorithm):
     @mu.setter
     def mu(self, value):
         self._mu.value = value
-    
+
     @property
     def mu_ratio(self):
         return self._mu_ratio.value
@@ -737,11 +732,11 @@ class CMAES(_ConfigureAlgorithm):
     @property
     def cmu(self):
         return self._cmu.value
-    
+
     @property
     def CHI_N(self):
         return self._CHI_N.value
-    
+
     @property
     def MU_EFF(self):
         return self._MU_EFF.value
@@ -766,7 +761,7 @@ class CMAES(_ConfigureAlgorithm):
         # weights
         weights = (np.log(self.N/2 + 0.5)
                    - np.log(np.arange(1, self.mu + 1, dtype=np.float)))
-        self._weights.default = weights / np.sum(weights)        
+        self._weights.default = weights / np.sum(weights)
         # --- add a constant
         self._MU_EFF = Float(
             value=np.sum(self.weights) ** 2 / np.sum(self.weights ** 2),
@@ -775,7 +770,7 @@ class CMAES(_ConfigureAlgorithm):
         # --- set default values
         # Step-size Adaptation
         self._cs.default = (self.MU_EFF + 2) / (self.D + self.MU_EFF + 5)
-        self._damps.default = (1 
+        self._damps.default = (1
             + 2 * max(0, ((self.MU_EFF - 1)/(self.D + 1)) ** 0.5 - 1) + self.cs)
         # Covariance Matrix Adaptation
         self._cc.default = ((4 + self.MU_EFF / self.D)
@@ -788,7 +783,7 @@ class CMAES(_ConfigureAlgorithm):
 
 class PSO(_ConfigureAlgorithm):
     CONFIG_NAME = "PSO related configuration"
-    
+
     def __init__(self, seed=None, N=20, w=1.0, c1=0.5, c2=0.5,
                  all_time_best=True, topology="star",
                  initial_scheme="latin_hypercube", update_scheme="immediate",
@@ -869,11 +864,11 @@ class PSO(_ConfigureAlgorithm):
             min=1, max=self.N,
             name="Neighborhood size",
             remark="The neighborhood size defines the extent of social"
-                   " interaction within the swarm. Starting the search with" 
+                   " interaction within the swarm. Starting the search with"
                    " small neighborhoods and increasing the neighborhood size"
                    " proportionally to the increase in number of iterations is"
                    " a good approach.")
-        
+
     #   --------------------------- Setter/Getter ---------------------------
     @property
     def w(self):
@@ -886,7 +881,7 @@ class PSO(_ConfigureAlgorithm):
     @property
     def c1(self):
         return self._c1.value
-    
+
     @c1.setter
     def c1(self, value):
         self._c1.value = value
@@ -910,7 +905,7 @@ class PSO(_ConfigureAlgorithm):
     @property
     def v_init(self):
         return self._v_init.value
-    
+
     @v_init.setter
     def v_init(self, value):
         self._v_init.value = value
@@ -934,7 +929,7 @@ class PSO(_ConfigureAlgorithm):
     @property
     def topology(self):
         return self._topology.value
-    
+
     @topology.setter
     def topology(self, value):
         self._topology.value = value
@@ -942,7 +937,7 @@ class PSO(_ConfigureAlgorithm):
     @property
     def n_neighbors(self):
         return self._n_neighbors.value
-    
+
     @n_neighbors.setter
     def n_neighbors(self, value):
         self._n_neighbors.value = value
@@ -970,7 +965,6 @@ class PSO_DE(PSO, DE):
 #!------------------------------------------------------------------------------
 #!                                    FUNCTIONS
 #!------------------------------------------------------------------------------
-
 
 
 
@@ -1027,7 +1021,7 @@ def main():
         print("a/b:", a / b)
         print("a//b:", a // b)
         print("a%b:", a % b)
-        #* Be careful when the base is negative and the exponent is decimal 
+        #* Be careful when the base is negative and the exponent is decimal
         #* (e.g. (-0.1)**3.2), the result is complex
         print("a**b:", a ** b)
         print("abs(a):", abs(a))

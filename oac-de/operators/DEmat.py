@@ -1,23 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-''' Differential Evolution operators (matrix version)
+''' Copyright 2022 Changwu Huang, Hao Bai and Xin Yao
 
-TODO:
-    - improve performance if numpy > 1.7
-      Ref1: https://stackoverflow.com/questions/8505651/non-repetitive-random-number-in-numpy
-      Ref2: https://numpy.org/doc/stable/reference/random/generated/numpy.random.RandomState.choice.html?highlight=random%20randint
+    Differential Evolution operators (matrix version)
 '''
 import numpy as np
-
-# internal imports
-
-
-# HB : the following imports are for personal purpose
-try:
-    import sys, IPython
-    sys.excepthook = IPython.core.ultratb.ColorTB()
-except:
-    pass
 
 
 
@@ -33,7 +20,7 @@ def _get_pbest(pop, fitness, p=0):
         p : float (default=0)
             top 100p% idividuals within [0,1]. If p=0, it returns the index of
             the minimum
-        
+
         Return
         ------
         1D-array : individuals indices
@@ -53,7 +40,7 @@ def _get_cov_pop(pop):
         Return
         ------
         Q : 2D-array
-            eigenvector basis, a square array of shape [D, D], whose i-th 
+            eigenvector basis, a square array of shape [D, D], whose i-th
             column is an eigenvector
         Qct : 2D-array
             conjugate transpose of the eigenvector basis
@@ -61,7 +48,7 @@ def _get_cov_pop(pop):
     # Each row is the xvalue of an individual, each col is a dimension
     COV = np.cov(pop, rowvar=False)
     # Eigen decomposition of COV:
-    # COV is a symmetric matrix, so use eigh() method, which is more quickly 
+    # COV is a symmetric matrix, so use eigh() method, which is more quickly
     # than eig().
     # A: eigenvalues; Q: matrix, each column is a eigenvector
     A, Q = np.linalg.eigh(COV)
@@ -82,10 +69,10 @@ def _get_cov_pop(pop):
 
 def rand_1(pop, F, RS, **kwargs):
     ''' DE/rand/1 mutation operator
-        
+
         Reference
         ---------
-        R. Storn et al., Differential Evolution – A Simple and Efficient 
+        R. Storn et al., Differential Evolution – A Simple and Efficient
         Heuristic for Global Optimization over Continuous Spaces, 1997
     '''
     _ = np.arange(pop.shape[0])
@@ -96,12 +83,12 @@ def rand_1(pop, F, RS, **kwargs):
 
 def rand_2(pop, F, RS, **kwargs):
     ''' DE/rand/2 mutation operator
-        
+
         Reference
         ---------
-        A. K. Qin, V. L. Huang and P. N. Suganthan, "Differential Evolution 
-        Algorithm With Strategy Adaptation for Global Numerical Optimization," 
-        in IEEE Transactions on Evolutionary Computation, vol. 13, no. 2, 
+        A. K. Qin, V. L. Huang and P. N. Suganthan, "Differential Evolution
+        Algorithm With Strategy Adaptation for Global Numerical Optimization,"
+        in IEEE Transactions on Evolutionary Computation, vol. 13, no. 2,
         pp. 398-417, April 2009, doi: 10.1109/TEVC.2008.927706.
     '''
     _ = np.arange(pop.shape[0])
@@ -115,11 +102,11 @@ def best_1(pop, F, RS, **kwargs):
     ''' DE/best/1 mutation operator
         fitness : 1D-array
             fitness corresponding to the population
-        
+
         Reference
         ---------
-        R. Storn, "On the usage of differential evolution for function optimization," 
-        Proceedings of North American Fuzzy Information Processing, Berkeley, 
+        R. Storn, "On the usage of differential evolution for function optimization,"
+        Proceedings of North American Fuzzy Information Processing, Berkeley,
         CA, USA, 1996, pp. 519-523, doi: 10.1109/NAFIPS.1996.534789.
     '''
     _ = np.arange(pop.shape[0])
@@ -133,11 +120,11 @@ def best_2(pop, F, RS, **kwargs):
     ''' DE/best/2 mutation operator
         fitness : 1D-array
             fitness corresponding to the population
-        
+
         Reference
         ---------
-        R. Storn, "On the usage of differential evolution for function optimization," 
-        Proceedings of North American Fuzzy Information Processing, Berkeley, 
+        R. Storn, "On the usage of differential evolution for function optimization,"
+        Proceedings of North American Fuzzy Information Processing, Berkeley,
         CA, USA, 1996, pp. 519-523, doi: 10.1109/NAFIPS.1996.534789.
     '''
     _ = np.arange(pop.shape[0])
@@ -155,8 +142,8 @@ def rand_to_best_1(pop, F, RS, **kwargs):
 
         Reference
         ---------
-        R. Storn, "On the usage of differential evolution for function optimization," 
-        Proceedings of North American Fuzzy Information Processing, Berkeley, 
+        R. Storn, "On the usage of differential evolution for function optimization,"
+        Proceedings of North American Fuzzy Information Processing, Berkeley,
         CA, USA, 1996, pp. 519-523, doi: 10.1109/NAFIPS.1996.534789.
     '''
     _ = np.arange(pop.shape[0])
@@ -204,8 +191,8 @@ def current_to_rand_1(pop, F, RS, **kwargs):
 
         Reference
         ---------
-        Opara, Karol, and Jarosław Arabas. "Comparison of mutation strategies 
-        in differential evolution–a probabilistic perspective." 
+        Opara, Karol, and Jarosław Arabas. "Comparison of mutation strategies
+        in differential evolution–a probabilistic perspective."
         Swarm and Evolutionary Computation 39 (2018): 53-69.
     '''
     _ = np.arange(pop.shape[0])
@@ -223,10 +210,10 @@ def current_to_best_1(pop, F, RS, **kwargs):
 
         Reference
         ---------
-        R. Storn, "On the usage of differential evolution for function optimization," 
-        Proceedings of North American Fuzzy Information Processing, Berkeley, 
+        R. Storn, "On the usage of differential evolution for function optimization,"
+        Proceedings of North American Fuzzy Information Processing, Berkeley,
         CA, USA, 1996, pp. 519-523, doi: 10.1109/NAFIPS.1996.534789.
-        J. Zhang et al., JADE: Adaptive Differential Evolution With Optional 
+        J. Zhang et al., JADE: Adaptive Differential Evolution With Optional
         External Archive, Oct. 2009
     '''
     _ = np.arange(pop.shape[0])
@@ -261,10 +248,10 @@ def current_to_pbest_1(pop, F, RS, **kwargs):
             fitness corresponding to the population
         p : float
             top 100p% idividuals within (0,1]
-        
+
         Reference
         ---------
-        J. Zhang et al., JADE: Adaptive Differential Evolution With Optional 
+        J. Zhang et al., JADE: Adaptive Differential Evolution With Optional
         External Archive, Oct. 2009
     '''
     _ = np.arange(pop.shape[0])
@@ -300,7 +287,7 @@ def bin(pop, pop_mutant, CR, RS, **kwargs):
 
         Reference
         ---------
-        R. Storn et al., Differential Evolution – A Simple and Efficient 
+        R. Storn et al., Differential Evolution – A Simple and Efficient
         Heuristic for Global Optimization over Continuous Spaces, 1997
     '''
     NP, D = pop.shape
@@ -311,7 +298,7 @@ def bin(pop, pop_mutant, CR, RS, **kwargs):
     cond1 = (0 + 1*RS.uniform(size=[NP, D])) <= CR[:, None]
     cond2 = (np.tile(np.arange(D), [NP, 1])) == (RS.randint(0, D, size=[NP, D]))
     return np.where(np.logical_or(cond1, cond2), pop_mutant, pop)
-    
+
 
 def exp(pop, pop_mutant, CR, RS, **kwargs):
     ''' Exponential crossover operator
@@ -351,7 +338,7 @@ def eig(pop, pop_mutant, CR, RS, operator=bin):
 
         Reference
         ---------
-        S. Guo et al., Enhancing Differential Evolution Utilizing 
+        S. Guo et al., Enhancing Differential Evolution Utilizing
         Eigenvector-Based Crossover Operator, Feb. 2015
     '''
     NP, D = pop.shape
@@ -373,36 +360,35 @@ def eig(pop, pop_mutant, CR, RS, operator=bin):
 
 
 
-
 #!------------------------------------------------------------------------------
 #!                                     TESTING
 #!------------------------------------------------------------------------------
 def main():
     RS = np.random.RandomState(0)
-    
+
     pop = np.array([[1,1,1,1],
                     [2,2,2,2],
                     [3,3,3,3],
                     [4,4,4,4],
                     [5,5,5,5]])
     popF = np.array([1,2,3,4,5])
-    
+
     mut = rand_1(pop=pop, F=0.5, RS=RS)
     print("Mutant: \n", mut)
-    
+
     trial = none(pop=pop, pop_mutant=mut, CR=0.5, RS=RS)
     print("Trial: \n", trial)
-    
+
     COV = np.cov(pop, rowvar=False)
-    
+
     A, Q = np.linalg.eigh(COV)
     print("A: ", A)
     print("Q: ", Q)
-    Qct = (np.matrix(Q)).H 
-   
+    Qct = (np.matrix(Q)).H
+
     print(Q@np.diag(A)@np.linalg.inv(Q))
     print(COV)
-    
+
     return mut, trial
 
 

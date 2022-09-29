@@ -1,4 +1,4 @@
-# Online algorithm configuration for differential evolution algorithm （OAC-DE)
+# Online algorithm configuration for differential evolution algorithm (OAC-DE)
 
 [Click here to read the full paper online.](https://link.springer.com/article/10.1007/s10489-021-02752-1)
 

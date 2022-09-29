@@ -1,18 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-''' Particle Swarm Optimization operators (matrix version)'
+''' Copyright 2022 Changwu Huang, Hao Bai and Xin Yao
+
+    Particle Swarm Optimization operators (matrix version)
 '''
 import numpy as np
-
-# internal imports
-
-
-# HB : the following imports are for personal purpose
-try:
-    import sys, IPython
-    sys.excepthook = IPython.core.ultratb.ColorTB()
-except:
-    pass
 
 
 
@@ -39,7 +31,7 @@ def update_velocity(v, pos, pos_cbest, pos_sbest, c1, c2, RS, w=1, **kwargs):
         pos_cbest : 2D-array
             cognitive best position found by each particle during its lifetime
         pos_sbest : float | 2D-array
-            social best position found by the global swarm (all neighbors) or 
+            social best position found by the global swarm (all neighbors) or
             local swarm (several neighbors)
         c1 : float | 1D-array
             positive acceleration constant used to scale the cognitive component
@@ -51,7 +43,7 @@ def update_velocity(v, pos, pos_cbest, pos_sbest, c1, c2, RS, w=1, **kwargs):
             NumPy's random number generator
         w : float | 1D-array (optional, default=1)
             inertia weight [2] used to scale the previous velocity (i.e., `v`)
-        
+
         Reference
         ---------
         [1]
@@ -73,7 +65,7 @@ def update_velocity(v, pos, pos_cbest, pos_sbest, c1, c2, RS, w=1, **kwargs):
 #!------------------------------------------------------------------------------
 def star(pos, fitness, *args, **kwargs):
     ''' Find the best position in the global swarm (all neighbors)
-        
+
         pos : 2D-array
             positions of particles
         fitness : 1D-array
@@ -115,10 +107,13 @@ def von_neumann(parameter_list):
     '''
     pass
 
+
+
 #!------------------------------------------------------------------------------
 #!                                 Cognitive Operators
 #!------------------------------------------------------------------------------
 # same as DE's <function select>
+
 
 
 #!------------------------------------------------------------------------------

@@ -1,27 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-''' Algorithms common attributes and methods
+''' Copyright 2022 Changwu Huang, Hao Bai and Xin Yao
+
+    Algorithms common attributes and methods
     Vectorized version
 '''
 import numpy as np
 import pandas as pd
 from copy import deepcopy
-
 # internal imports
 import utils
 from publics import tools
 from publics import parameterize as para
-# from problems import problem as pb
-# from architectures.population import DEpopulation, PSOpopulation, PSO_DEpopulation
-# from operators import DEmat as DEoperator
-# from operators import PSO as PSOoperator
-
-# HB : the following imports are for personal purpose
-try:
-    import sys, IPython
-    sys.excepthook = IPython.core.ultratb.ColorTB()
-except:
-    pass
 
 
 
@@ -73,7 +63,6 @@ class __base(object):
     def para(self):
         return self._para
 
-    # TODO: neeed to consider the configuration type for mixed algos
     @para.setter
     def para(self, hyperparameters):
         if isinstance(hyperparameters, self.CONFIG_TYPE):
@@ -205,11 +194,6 @@ class __base(object):
             stem = str(filestring)
             utils.save_json(self.output, stem+".json", replace)
 
-        # if self.para.record_position == True:
-        #     self.pop.X_hist = np.array(self.pop.X_hist)
-        #     self.pop.F_hist = np.array(self.pop.F_hist)
-        #     np.savez(stem, X_hist=self.pop.X_hist, F_hist=self.pop.F_hist)
-
     # ----------------------------- Private Methods ----------------------------
     def _display_result(self, flag):
         if flag:
@@ -237,16 +221,11 @@ class __base(object):
                            "used_CR": self.pop.used_CR,
                            "pop_X": self.pop.X,
                            "pop_F": self.pop.F,
-                        #    "pop_sum_dist": self.pop.sum_distance,
-                        #    "pop_avg_dist": self.pop.avg_distance,
                            }
         request_items = {k: available_items.get(k) for k in keys_list}
-        self.history = self.history.append(request_items, ignore_index=True)
-
-    # def _record_propagation(self):
-    #     ''' Record individual's position and fitness '''
-    #     self.pop.X_hist.append(self.pop.X)
-    #     self.pop.F_hist.append(self.pop.F)
+        df_request_items = pd.Series(request_items)
+        self.history = pd.concat(
+            [self.history, df_request_items.to_frame().T], ignore_index=True)
 
     def _collect_output(self):
         result = {}

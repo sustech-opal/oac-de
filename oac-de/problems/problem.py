@@ -1,18 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-''' Optimization problem definitions
+''' Copyright 2022 Changwu Huang, Hao Bai and Xin Yao
+
+    Optimization problem definitions
 '''
 import numpy as np
 import algorithms as alg
 # internal imports
 from publics import parameterize as para
 from publics.tools import ensure_bounds_clip, ensure_bounds_mirror
-# HB : the following imports are for personal purpose
-try:
-    import sys, IPython
-    sys.excepthook = IPython.core.ultratb.ColorTB()
-except:
-    pass
 
 
 
@@ -387,7 +383,6 @@ class Benchmark(SingleObject):
             Instance ID to specify the instance of selected function.
         '''
         try:
-            from . import cecbenchmarks as cec
             from . import bbobbenchmarks as bbob2015
         except Exception as e:
             print("Cannot import benchmark sets, please check that you have"
@@ -395,32 +390,8 @@ class Benchmark(SingleObject):
             raise e
         init_lower_bound, init_upper_bound = None, None
 
-        #* CEC2005
-        if benchmark_set.lower() == "cec2005":
-            cec_problem = cec.CEC2005(D=D, funID=funID)
-            init_lower_bound, init_upper_bound = cec_problem.init_bounds
-            objective_function = cec_problem.objective_function
-            lower_bound = cec_problem.min_bounds
-            upper_bound = cec_problem.max_bounds
-            fopt = cec_problem.bias
-            instanceID = None  # cec2005 test functions do not have instanceID
-            name = "CEC2005-F{}, D={}".format(cec_problem.funID, cec_problem.D)
-
-        #* CEC2017
-        elif benchmark_set.lower() == "cec2017":
-            cec_problem = cec.CEC2017(
-                D=D, funID=funID,
-                so_path="~/Codes/changwu/data/CEC2017/cec17_test_func.so",
-                input_data_path="~/Codes/changwu/data/CEC2017/input_data")
-            objective_function = cec_problem.objective_function
-            lower_bound = cec_problem.min_bounds
-            upper_bound = cec_problem.max_bounds
-            fopt = cec_problem.bias
-            instanceID = None  # cec2017 test functions do not have instanceID
-            name = "CEC2017-F{}, D={}".format(cec_problem.funID, cec_problem.D)
-
         #* BBOB2015
-        elif benchmark_set.lower() == "bbob2015":
+        if benchmark_set.lower() == "bbob2015":
             if funID not in range(1, 25):
                 raise ValueError("The `funID` for BBOB2015 benchmark set should"
                     " be integers within [1, 24]")

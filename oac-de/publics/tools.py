@@ -1,8 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-''' Some common functions and useful toolbox
+''' Copyright 2022 Changwu Huang, Hao Bai and Xin Yao
+
+    Some utilities and useful toolbox
 '''
+import json
+import datetime
 import numpy as np
+from pathlib import Path
 from matplotlib import pyplot as plt
 
 
@@ -39,7 +44,7 @@ def plot(x, y, linestyle="-", label="", xlabel="", ylabel="", title="",ax=None,
             plt.show()
 
 
-def plot_hist(x, bins, density, cumulative, label="", xlabel="", ylabel="", 
+def plot_hist(x, bins, density, cumulative, label="", xlabel="", ylabel="",
     title="", ax=None, legend=False, show=True):
         ''' Plot result curve '''
         print("[INFO] Plotting ...")
@@ -60,7 +65,7 @@ def plot_hist(x, bins, density, cumulative, label="", xlabel="", ylabel="",
 def plot_bar_stacked(data, x_label=None, y_label=None, ax=None, **kwargs):
     if ax is None:
         ax = plt.gca()
-    
+
     test = data.copy()
     # get data length
     temp = data.popitem()
@@ -158,7 +163,7 @@ def check_random_state(seed):
         - If it is None, return the RandomState singleton used by np.random.
         - If it is an int, return a new RandomState instance seeded with seed.
         - If it is already a RandomState instance, return it.
-    
+
     Returns
     -------
         An object of np.random.RandomState serving as a random number generator
@@ -170,24 +175,69 @@ def check_random_state(seed):
     if isinstance(seed, np.random.RandomState):
         return seed
 
+def to_json(data, path, replace=True):
+    """Convert a Python object to a JSON file
+
+    Note NaN and None will be converted to null and datetime objects will be
+    converted to UNIX timestamps.
+
+    Parameters
+    ----------
+    data : Python data types (dict, list, tuple, str, int, float, bool, None)
+        Object to be dumped
+    path : str or Path
+        File path where the JSON file will be stored
+    replace : bool, optional
+        Whether to replace the existing file, by default True
+    """
+    # convert unserializable objects
+    if isinstance(data, dict):
+        for key, value in data.items():
+            # convert value to be serializable
+            if isinstance(value, np.ndarray):
+                data[key] = value.tolist()
+            elif isinstance(value, (list, tuple)):
+                for i, v in enumerate(value):
+                    if isinstance(v, np.ndarray):
+                        value[i] = v.tolist()
+            elif isinstance(value, dict):
+                for k, v in value.items():
+                    if isinstance(v, np.ndarray):
+                        value[k] = v.tolist()
+            # convert key to string
+            if not isinstance(key, str):
+                data[str(key)] = data.pop(key)
+    # write data by using json format
+    encode = json.dumps(data, indent=4)
+    # check if the file already exists
+    if not isinstance(path, Path):
+        path = Path(path)
+    if path.exists() and not replace:
+        oldname, extension = path.stem, path.suffix
+        suffix = str(datetime.datetime.now())
+        path = path.with_name(oldname+"_"+suffix+extension)
+    # write to file
+    with path.open("w", encoding="utf-8") as f:
+        f.write(encode)
+
 #   ------------------ Measure the diversity/similarity ------------------
 def euclidian_distance(x, y):
     return np.linalg.norm(x-y)
 
 def scn1(IND_new, IND_parent):
     ''' Similarity to its parent(s)
-    
+
     Parameters
     ----------
     IND_new : list | np.array
         The list of child individuals
     IND_parent : list | np.array
         The list of parent individuals
-    
+
     Returns
     -------
         The Euclidian distance individuals
-    
+
     References
     ----------
         M. Crepinsek, et al., 2013, Exploration and exploitation in evolutionary algorithms: A survey, page 35:12, equation (3)
@@ -197,16 +247,16 @@ def scn1(IND_new, IND_parent):
 
 def scn2(POP):
     ''' Similarity to the most similar individual within the whole population P
-    
+
     Parameters
     ----------
     POP : list | np.array
         The list of all individuals in population P
-    
+
     Returns
     -------
         The Euclidian distance individuals
-    
+
     References
     ----------
         M. Crepinsek, et al., 2013, Exploration and exploitation in evolutionary algorithms: A survey, page 35:12, equation (5)
@@ -222,16 +272,16 @@ def scn2(POP):
 
 def scn3(IND):
     ''' Similarity to the most similar individual in the subpopulation P'
-    
+
     Parameters
     ----------
     IND : list | np.array
         The list of all individuals in population P
-    
+
     Returns
     -------
         The Euclidian distance individuals
-    
+
     References
     ----------
         M. Crepinsek, et al., 2013, Exploration and exploitation in evolutionary algorithms: A survey, page 35:12, equation (6)
@@ -240,16 +290,16 @@ def scn3(IND):
 
 def scn4(IND):
     ''' As a similarity to the most similar individual throughout the history of populations
-    
+
     Parameters
     ----------
     IND : list | np.array
         The list of all individuals in population P
-    
+
     Returns
     -------
         The Euclidian distance individuals
-    
+
     References
     ----------
         M. Crepinsek, et al., 2013, Exploration and exploitation in evolutionary algorithms: A survey, page 35:12, equation (6)
@@ -258,7 +308,7 @@ def scn4(IND):
 
 #   --------------- Make elements out of bounds into the bounds ---------------
 def ensure_bounds_clip(vector, lower_bound, upper_bound):
-    ''' Make the generated vector within the search domain by clipping 
+    ''' Make the generated vector within the search domain by clipping
     elements which are out of the bounds '''
     new_vector = np.copy(vector)
     # if lower_bound:
@@ -285,7 +335,7 @@ def ensure_bounds_mirror(vector, lower_bound, upper_bound):
 #   ------------------------ Initial sampling schemes ------------------------
 def latin_hypercube_sampling(N, D, lb, ub, rng, criterion="cls", iterations=5):
     '''
-    Generate `N` samples in `D` dimensional space using Latain Hypercube 
+    Generate `N` samples in `D` dimensional space using Latain Hypercube
     Sampling (LHS).
 
     Parameters
@@ -301,13 +351,13 @@ def latin_hypercube_sampling(N, D, lb, ub, rng, criterion="cls", iterations=5):
     rng : instance of np.random.RandomState
         A random number generator.
     criterion : str, optional [default="classic"]
-        Choose a method to be used in Latain Hypercube Sampling (LHS), the 
-        allowable options are: "classic" (or "cls"), "center" (or "c"), 
+        Choose a method to be used in Latain Hypercube Sampling (LHS), the
+        allowable options are: "classic" (or "cls"), "center" (or "c"),
         "maximin" (or "m"), "centermaximin" (or "cm"), "correlation" (or "corr")
     iterations : int, optional [default=5]
-        The number of iterations used in the "maximin" and "correlation" 
+        The number of iterations used in the "maximin" and "correlation"
         methods of Latain Hypercube Sampling (LHS).
-    
+
     Returns
     -------
     LHS : 2D array of shape (N, D)
@@ -334,9 +384,9 @@ def latin_hypercube_sampling(N, D, lb, ub, rng, criterion="cls", iterations=5):
 
 def uniform_random_sampling(N, D, lb, ub, rng, *args, **kwargs):
     '''
-    Generate `N` samples in `D` dimensional space using Uniform Random 
+    Generate `N` samples in `D` dimensional space using Uniform Random
     Sampling (URS).
-    
+
     Parameters
     ----------
     N : int
@@ -393,7 +443,7 @@ def __lhscenter(num_samples, dimension, rng, iterations="unused"):
     return H
 
 def __lhsmaxmin(num_samples, dimension, rng, iterations):
-    ''' LHS using maximin metric: maximize the minimal distance between 
+    ''' LHS using maximin metric: maximize the minimal distance between
     all possible pairs of points'''
     maxdist = 0
     # Maximize the minimum distance between points
@@ -406,7 +456,7 @@ def __lhsmaxmin(num_samples, dimension, rng, iterations):
     return H
 
 def __lhscentermaxmin(num_samples, dimension, rng, iterations):
-    ''' LHS using center maximin metric: maximize the minimal distance 
+    ''' LHS using center maximin metric: maximize the minimal distance
     between all possible pairs of points'''
     maxdist = 0
     # Maximize the minimum distance between points
@@ -437,22 +487,22 @@ def __lhscorrelate(num_samples, dimension, rng, iterations):
 def __pdist(x, p=2):
     '''
     Calculate the pair-wise point distances of a matrix
-    
+
     Parameters
     ----------
     x : 2d-array
         An M-by-N array of scalars, where there are M points in N dimensions
-        
+
     p : 2, 1, or np.Inf, optional
-        p-norm distance measure. If p = 1, Manhattan distance is used. If 
+        p-norm distance measure. If p = 1, Manhattan distance is used. If
         p = 2, Euclidean distance is used.
-    
+
     Returns
     -------
     d : ndarray
-        A 1-by-b array of scalars, where b = M*(M - 1)/2. This array 
-        contains all the pair-wise point distances, arranged in the order 
-        (1, 0), (2, 0), ..., (M-1, 0), (2, 1), ..., (M-1, 1), ..., (M-1, 
+        A 1-by-b array of scalars, where b = M*(M - 1)/2. This array
+        contains all the pair-wise point distances, arranged in the order
+        (1, 0), (2, 0), ..., (M-1, 0), (2, 1), ..., (M-1, 1), ..., (M-1,
         M-2).
     '''
     x = np.atleast_2d(x)
@@ -476,24 +526,24 @@ def __pdist(x, p=2):
 #!------------------------------------------------------------------------------
 def main():
     case = 3
-    
+
     # case 1: test `chech_random_state`
     if case == 1:
         seed = check_random_state(seed=1)
-        print("[OK] The return is np.RandomState: {}".format(isinstance(seed, 
+        print("[OK] The return is np.RandomState: {}".format(isinstance(seed,
             np.random.RandomState)))
-    
-    # case 2: test ensure_bounds    
+
+    # case 2: test ensure_bounds
     if case == 2:
         D = 3
         lb = [-5]*D; ub = [5]*D
         x = np.random.rand(D) * 8
-        print("The original x is out of the boundary: {}".format((np.any(x<lb) 
+        print("The original x is out of the boundary: {}".format((np.any(x<lb)
             or np.any(x>ub))))
         clipped_x = ensure_bounds_clip(vector=x, lower_bound=lb, upper_bound=ub)
         clip_flag = np.any(clipped_x<lb) or np.any(clipped_x>ub)
         print("The clipped x is out of the boundary: {}".format(clip_flag))
-        mirrored_x = ensure_bounds_mirror(vector=x, lower_bound=lb, 
+        mirrored_x = ensure_bounds_mirror(vector=x, lower_bound=lb,
             upper_bound=ub)
         mirror_flag = np.any(mirrored_x<lb) or np.any(mirrored_x>ub)
         print("The mirrored x is out of the boundary: {}".format(mirror_flag))
@@ -502,13 +552,13 @@ def main():
         print("Mirrored x:\t{}".format(mirrored_x))
         if not clip_flag and not mirror_flag:
             print("[OK] The clip & mirror ensure bounds methods.")
-            
+
     # case 3: test sampling methods
     if case == 3:
         D = 3; N = 5
         lb = [-5]*D; ub = [5]*D
         lb = np.array(lb); ub = np.array(ub)
-        CRITERIONS = ["classic",  "cls","center", "c", "maximin", "m", 
+        CRITERIONS = ["classic",  "cls","center", "c", "maximin", "m",
          "centermaximin", "cm",  "correlation", "corr"]
         iters = 10
         random_state = check_random_state(seed=1)
@@ -516,7 +566,7 @@ def main():
         if urs.shape == (N, D):
             print("[OK] random sampling")
         for cr in CRITERIONS:
-            lhs = latin_hypercube_sampling(N, D, lb, ub, seed=random_state, 
+            lhs = latin_hypercube_sampling(N, D, lb, ub, seed=random_state,
                 criterion=cr, iterations=iters)
             if lhs.shape == (N, D):
                 print("[OK] Latin Hypercube samping with criterion `{}`."

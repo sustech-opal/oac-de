@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-''' Hyperparameter Tuners common attributes and methods
+''' Copyright 2022 Changwu Huang, Hao Bai and Xin Yao
+
+    Hyperparameter Tuners common attributes and methods
     Vectorized version
 '''
 

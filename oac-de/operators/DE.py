@@ -1,18 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-''' Differential Evolution operators
+''' Copyright 2022 Changwu Huang, Hao Bai and Xin Yao
+
+    Differential Evolution operators
 '''
 import numpy as np
-
-# internal imports
-
-
-# HB : the following imports are for personal purpose
-try:
-    import sys, IPython
-    sys.excepthook = IPython.core.ultratb.ColorTB()
-except:
-    pass
 
 
 
@@ -132,8 +124,8 @@ def current_to_best_2(pop, target_idx, F):
 def current_to_pbest_1(pop, target_idx, F, **kwargs):
     ''' DE/current-to-pbest/1 mutation operator with optional external archive
     Ref:
-        J. Zhang and A. C. Sanderson, "JADE: Adaptive Differential Evolution 
-        With Optional External Archive," in IEEE Transactions on 
+        J. Zhang and A. C. Sanderson, "JADE: Adaptive Differential Evolution
+        With Optional External Archive," in IEEE Transactions on
         Evolutionary Computation, vol. 13, no. 5, pp. 945-958, Oct. 2009.
     '''
     p = kwargs.get("p")
@@ -263,8 +255,8 @@ def none_crossover(pop, target_idx, mutant_vec, CR):
 
 def eig_crossover(pop, target_idx, mutant_vec, CR):
     '''Eigenvector-Based Crossover
-    Ref: S. Guo and C. Yang, "Enhancing Differential Evolution Utilizing 
-    Eigenvector-Based Crossover Operator," in IEEE Transactions on 
+    Ref: S. Guo and C. Yang, "Enhancing Differential Evolution Utilizing
+    Eigenvector-Based Crossover Operator," in IEEE Transactions on
     Evolutionary Computation, vol. 19, no. 1, pp. 31-49, Feb. 2015.'''
     # if eig vector not exit, calculate them, else do eig crossover directly.
     if pop._Q is None or pop._Qct is None:

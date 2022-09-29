@@ -1,22 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-''' Multi-Armed Bandit family
-TODO
-    - Contextual bandit strategies
-    - online linear classfier: LinUCB (Upper Confidence Bound) algorithm
-    - online non-linear classifier: UCBogram algorithm
+''' Copyright 2022 Changwu Huang, Hao Bai and Xin Yao
+
+    Multi-Armed Bandit family
 '''
 import math
 import numpy as np
 from copy import deepcopy
 # internal imports
 from tuners._base import __base
-# HB : the following imports are for personal purpose
-try:
-    import sys, IPython
-    sys.excepthook = IPython.core.ultratb.ColorTB()
-except:
-    pass
 
 
 
@@ -242,23 +234,6 @@ class UCB(__baseMAB):
 #!------------------------------------------------------------------------------
 #!                                    FUNCTIONS
 #!------------------------------------------------------------------------------
-# def switch(bandit_algo, feature_discrete, RS,
-#                        value_estimation_method, **kwargs):
-#     if bandit_algo == "EpsilonGreedy":
-#         return EpsilonGreedy(feature_discrete, RS,
-#                              value_estimation_method, **kwargs)
-#     elif bandit_algo == "Softmax":
-#         return Softmax(feature_discrete, RS,
-#                        value_estimation_method, **kwargs)
-#     elif bandit_algo == "SUS_Softmax":
-#         return SUS_Softmax(feature_discrete, RS,
-#                            value_estimation_method, **kwargs)
-#     elif bandit_algo == "UCB":
-#         return UCB(feature_discrete, RS,
-#                    value_estimation_method, **kwargs)
-#     else:
-#         raise ValueError(
-#             "`bandit_algo` must be one of 'EpsilonGreedy', 'Softmax' or 'UCB1'")
 
 
 
@@ -266,7 +241,6 @@ class UCB(__baseMAB):
 #!                                     TESTING
 #!------------------------------------------------------------------------------
 def main():
-    case = 35
     pass
 
 

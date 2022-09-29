@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-''' Populations of evolutionary algorithms (EA)
+''' Copyright 2022 Changwu Huang, Hao Bai and Xin Yao
+
+    Populations of evolutionary algorithms (EA)
     Vectorized version
 '''
 import numpy as np
@@ -8,12 +10,6 @@ from copy import deepcopy
 # internal imports
 from operators import DEmat as DE
 from operators import PSO
-# HB : the following imports are for personal purpose
-try:
-    import sys, IPython
-    sys.excepthook = IPython.core.ultratb.ColorTB()
-except:
-    pass
 
 
 

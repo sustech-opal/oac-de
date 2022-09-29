@@ -1,29 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-''' Algorithms in developping
+''' Copyright 2022 Changwu Huang, Hao Bai and Xin Yao
+
+    Algorithms in developping
     Vectorized version
 '''
-import sys
-sys.path.append("..")
-
 import numpy as np
 from copy import deepcopy
 # internal imports
-import utils
 from publics import parameterize as para
 import operators as oper
-from _algo import __base
-from algoDE import DE
-# from tuners import multi_armed_bandit as MAB
-# from tuners.non_parameter import *
+from algorithms.algoDE import DE
 import tuners as tune
-
-# HB : the following imports are for personal purpose
-try:
-    import sys, IPython
-    sys.excepthook = IPython.core.ultratb.ColorTB()
-except:
-    pass
 
 
 
@@ -388,7 +376,6 @@ class AEECDE(DE):
 #!------------------------------------------------------------------------------
 #!                                     TESTING
 #!------------------------------------------------------------------------------
-@utils.timer
 def main():
     from problems import problem as pb
 

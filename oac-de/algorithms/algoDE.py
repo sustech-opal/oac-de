@@ -1,23 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-''' Differential evolution (DE) algorithm family
+''' Copyright 2022 Changwu Huang, Hao Bai and Xin Yao
+
+    Differential evolution (DE) algorithm family
     Vectorized version
 '''
 import numpy as np
 from collections import OrderedDict
 # internal imports
-import utils
 from publics import parameterize as para
 from architectures.population import popDE
 import operators as oper
 from algorithms._algo import __base
 import tuners as tune
-# HB : the following imports are for personal purpose
-try:
-    import sys, IPython
-    sys.excepthook = IPython.core.ultratb.ColorTB()
-except:
-    pass
 
 
 
@@ -1091,7 +1086,6 @@ class SHADE(DE):
 #!------------------------------------------------------------------------------
 #!                                     TESTING
 #!------------------------------------------------------------------------------
-@utils.timer
 def main():
     from problems import problem as pb
 

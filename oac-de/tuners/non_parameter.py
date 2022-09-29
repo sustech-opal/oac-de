@@ -1,17 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-''' Non-Parametric family
+''' Copyright 2022 Changwu Huang, Hao Bai and Xin Yao
+
+    Non-Parametric family
 '''
 import numpy as np
 from sklearn.neighbors import KernelDensity
 # internal imports
 from tuners._base import __base
-# HB : the following imports are for personal purpose
-try:
-    import sys, IPython
-    sys.excepthook = IPython.core.ultratb.ColorTB()
-except:
-    pass
 
 
 

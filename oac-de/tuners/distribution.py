@@ -1,19 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-''' Distribution based family
-    TODO
-        - add new method: 在随机数超出范围时1）重新生成；2）截尾
+''' Copyright 2022 Changwu Huang, Hao Bai and Xin Yao
+
+    Distribution based family
 '''
 import numpy as np
 import scipy.stats as ss
 # internal imports
 from tuners._base import __base
-# HB : the following imports are for personal purpose
-try:
-    import sys, IPython
-    sys.excepthook = IPython.core.ultratb.ColorTB()
-except:
-    pass
 
 
 
