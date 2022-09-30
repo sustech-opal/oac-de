@@ -8,11 +8,11 @@
 import numpy as np
 from collections import OrderedDict
 # internal imports
-from publics import parameterize as para
-from architectures.population import popDE
-import operators as oper
-from algorithms._algo import __base
-import tuners as tune
+from oacde import tuners as tune
+from oacde import operators as oper
+from oacde.algorithms._algo import __base
+from oacde.architectures.population import popDE
+from oacde.publics import parameterize as para
 
 
 

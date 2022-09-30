@@ -5,10 +5,10 @@
     Optimization problem definitions
 '''
 import numpy as np
-import algorithms as alg
+from oacde import algorithms as alg
 # internal imports
-from publics import parameterize as para
-from publics.tools import ensure_bounds_clip, ensure_bounds_mirror
+from oacde.publics import parameterize as para
+from oacde.publics.tools import ensure_bounds_clip, ensure_bounds_mirror
 
 
 

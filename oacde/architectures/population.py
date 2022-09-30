@@ -8,8 +8,8 @@
 import numpy as np
 from copy import deepcopy
 # internal imports
-from operators import DEmat as DE
-from operators import PSO
+from oacde.operators import PSO
+from oacde.operators import DEmat as DE
 
 
 

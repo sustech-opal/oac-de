@@ -5,9 +5,10 @@
     [DEBUG ONLY] Validation of modules and functions
 '''
 import time
-from problems import problem as pb
-from publics import parameterize as para
-from algorithms.algodev import OACDE
+import oacde
+# from problems import problem as pb
+# from publics import parameterize as para
+# from algorithms.algodev import OACDE
 
 
 tik = time.time()
@@ -22,21 +23,21 @@ outputs = []
 benchmark = "bbob2015"
 D = 20
 funID = 7 # 8 9 Rosenbrock , 15 Rastrigin
-problem = pb.Benchmark(benchmark_set=benchmark, D=D, funID=funID,
+problem = oacde.pb.Benchmark(benchmark_set=benchmark, D=D, funID=funID,
     instanceID=1)
 
 ## 2. Algorithm Configuration
 NP = 24
-config = para.DE(seed = seed,
+config = oacde.para.DE(seed = seed,
                     N = NP,
                     mutation='de/rand/1'
                     )
-stop = para.StopCondition(max_FES=100.*NP, max_iter=None, delta_ftarget=1e-8)
+stop = oacde.para.StopCondition(max_FES=100.*NP, max_iter=None, delta_ftarget=1e-8)
 
 ## 3. Aglorithm Selection: using DE random algorithm
 if case == "OACDE" or case == 1 or case == "ALL":
     print("--- Testing OACDE:")
-    optimizer = OACDE(opt_problem=problem,
+    optimizer = oacde.OACDE(opt_problem=problem,
                         algo_parameters=config,
                         stop_conditions=stop,
                         mut_pool=[

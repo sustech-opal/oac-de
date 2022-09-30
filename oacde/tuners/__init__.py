@@ -16,9 +16,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 '''
-from tuners import multi_armed_bandit
-from tuners import non_parameter
-from tuners import distribution
+from . import multi_armed_bandit
+from . import non_parameter
+from . import distribution
 
 
 def initialize_model(model_name, *args, **kwargs):

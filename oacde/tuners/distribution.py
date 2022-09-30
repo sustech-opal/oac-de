@@ -7,7 +7,7 @@
 import numpy as np
 import scipy.stats as ss
 # internal imports
-from tuners._base import __base
+from oacde.tuners._base import __base
 
 
 

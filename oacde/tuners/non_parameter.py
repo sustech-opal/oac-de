@@ -7,7 +7,7 @@
 import numpy as np
 from sklearn.neighbors import KernelDensity
 # internal imports
-from tuners._base import __base
+from oacde.tuners._base import __base
 
 
 

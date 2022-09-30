@@ -8,10 +8,10 @@
 import numpy as np
 from copy import deepcopy
 # internal imports
-from publics import parameterize as para
-import operators as oper
-from algorithms.algoDE import DE
-import tuners as tune
+import oacde.operators as oper
+from oacde.algorithms.algoDE import DE
+from oacde import tuners as tune
+from oacde.publics import parameterize as para
 
 
 
