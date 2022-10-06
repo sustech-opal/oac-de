@@ -230,7 +230,7 @@ class OACDE(DE):
 
         #* Add-step: update KDE and MAB models' training data
         self.update_models(self.survival_idx)
-        print("")
+        # print("")
 
 
     # --------------------------- Overwrite Methods ---------------------------
@@ -344,40 +344,12 @@ class OACDE(DE):
             self.F_CR_model[arm].reset()
 
 
-## ----------- Adaptive Exploration and Exploitation Control for DE -----------
-class AEECDE(DE):
-    ''' :class:`AEECDE` refers to daptive Exploration and Exploitation Control
-        for Differential Evolution algorithm
-
-        Features
-        --------
-        -
-        -
-
-        References
-        ---------
-        H. Bai, C. Huang, X. Yao, Adaptive Differential Evolution based on
-        Exploration and Exploitation Control, 2021
-    '''
-    ALGO_NAME = "AEECDE"
-    CONFIG_TYPE = para.DE
-
-    def __init__(self,
-                 opt_problem,
-                 algo_parameters,
-                 stop_conditions,
-                 **kwargs):
-        super().__init__(
-            opt_problem, algo_parameters, stop_conditions, **kwargs)
-        #* Attributes
-
-
 
 #!------------------------------------------------------------------------------
 #!                                     TESTING
 #!------------------------------------------------------------------------------
 def main():
-    from problems import problem as pb
+    from oacde.problems import problem as pb
 
     seed = 0  # ! HB: don't change this value
     # rng = np.random.RandomState(seed)

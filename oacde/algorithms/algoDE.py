@@ -1087,7 +1087,7 @@ class SHADE(DE):
 #!                                     TESTING
 #!------------------------------------------------------------------------------
 def main():
-    from problems import problem as pb
+    from oacde.problems import problem as pb
 
     seed = 1226332587  # ! HB: don't change this value
     # rng = np.random.RandomState(seed)

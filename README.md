@@ -12,13 +12,15 @@ The performance of evolutionary algorithms (EAs) is strongly affected by their c
 
 ### How to install
 
+`pip install oacde`
+
 ### How to use
 
-### Gallery
+`import oacde`
 
+### Tutorial
 
-[Click here to view the test functions defined in *bbob2015* benchmark](
-    http://numbbo.github.io/coco/testsuites/bbob)
+[Click here to read the full tutorial.](https://github.com/sustech-opal/oac-de/blob/main/tutorial.ipynb)
 
 
 ## Citation
@@ -48,3 +50,8 @@ The performance of evolutionary algorithms (EAs) is strongly affected by their c
 ## Contact
 
 [Asst. Prof. Changwu HUANG](https://faculty.sustech.edu.cn/huangcw3/en/)
+
+## References
+
+[Click here to view the test functions defined in *bbob2015* benchmark.](
+    http://numbbo.github.io/coco/testsuites/bbob)

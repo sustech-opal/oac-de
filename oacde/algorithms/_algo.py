@@ -9,7 +9,6 @@ import numpy as np
 import pandas as pd
 from copy import deepcopy
 # internal imports
-import utils
 from oacde.publics import tools
 from oacde.publics import parameterize as para
 
@@ -124,7 +123,7 @@ class __base(object):
         self.pop.used_CX = ""
         self.pop.used_CR = np.nan
 
-    def solve(self, disp=True, plot=False):
+    def solve(self, disp=False, plot=False):
         self._initiate_generation_0()
         self._write_to_history(self.HIST_ITEMS)
         # self._write_to_propagation()
@@ -186,13 +185,13 @@ class __base(object):
         '''
         if ".json" in filestring:
             stem = filestring.split(".")[0]
-            utils.save_json(self.output, filestring, replace)
+            tools.to_json(self.output, filestring, replace)
         elif filestring == "":
             stem = self.pb.name + "_" + self.ALGO_NAME
-            utils.save_json(self.output, stem+".json", replace)
+            tools.to_json(self.output, stem+".json", replace)
         else:
             stem = str(filestring)
-            utils.save_json(self.output, stem+".json", replace)
+            tools.to_json(self.output, stem+".json", replace)
 
     # ----------------------------- Private Methods ----------------------------
     def _display_result(self, flag):

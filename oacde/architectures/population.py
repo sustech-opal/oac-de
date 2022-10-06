@@ -241,15 +241,7 @@ def get_f(object):
 #!                                     TESTING
 #!------------------------------------------------------------------------------
 def main():
-    case = 2
-
-#  --- Test DE
-    if case == 2 or case == "ALL":
-        a = Individual(fitness=1, solution=np.array([10., 20., 30.]))
-        b = Individual(np.array([10., 20., 30.]), 2)
-        c = Individual(np.array([10., 20., 30.]), 3)
-        pop1 = popDE([b, a, c])
-        print("[OK] DE population")
+    pass
 
 if __name__ == '__main__':
         main()
