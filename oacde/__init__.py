@@ -17,8 +17,8 @@
     limitations under the License.
 '''
 from algorithms.algodev import OACDE
-import architectures
-import operators
-from problems import problem as pb
-from publics import parameterize as para
-import tuners
+# import architectures
+# import operators
+from problems import problem
+# import publics
+# import tuners

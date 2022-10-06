@@ -6,9 +6,7 @@
 '''
 import time
 import oacde
-# from problems import problem as pb
-# from publics import parameterize as para
-# from algorithms.algodev import OACDE
+
 
 
 tik = time.time()
@@ -21,18 +19,18 @@ outputs = []
 
 ## 1. Problem Configuration
 benchmark = "bbob2015"
-D = 20
+D = 10
 funID = 7 # 8 9 Rosenbrock , 15 Rastrigin
-problem = oacde.pb.Benchmark(benchmark_set=benchmark, D=D, funID=funID,
+problem = oacde.problem.Benchmark(benchmark_set=benchmark, D=D, funID=funID,
     instanceID=1)
 
 ## 2. Algorithm Configuration
 NP = 24
-config = oacde.para.DE(seed = seed,
+config = oacde.publics.parameterize.DE(seed = seed,
                     N = NP,
                     mutation='de/rand/1'
                     )
-stop = oacde.para.StopCondition(max_FES=100.*NP, max_iter=None, delta_ftarget=1e-8)
+stop = oacde.publics.parameterize.StopCondition(max_FES=1000.*NP, max_iter=None, delta_ftarget=1e-8)
 
 ## 3. Aglorithm Selection: using DE random algorithm
 if case == "OACDE" or case == 1 or case == "ALL":
@@ -65,7 +63,6 @@ if case == "OACDE" or case == 1 or case == "ALL":
                                                 # "sliding_window_average"
                         )
     results = optimizer.solve(disp=1)
-
 
 
 

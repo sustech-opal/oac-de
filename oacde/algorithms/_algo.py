@@ -68,7 +68,7 @@ class __base(object):
         if isinstance(hyperparameters, self.CONFIG_TYPE):
             self._para = hyperparameters
         else:
-            raise TypeError("The {} algorithm's configuration (i.e."
+            raise TypeError("The {} algorithm's configuration (i.e.,"
                 " hyperparameters) must be an instance of {}, not an instance"
                 " of {}".format(type(self).__name__, self.CONFIG_TYPE,
                 type(hyperparameters)))
