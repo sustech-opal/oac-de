@@ -27,7 +27,7 @@ The performance of evolutionary algorithms (EAs) is strongly affected by their c
 
 1. You may cite this work in a scientific context as:
 
-    Huang, C., Bai, H. & Yao, X. Online algorithm configuration for differential evolution algorithm. Appl Intell 52, 9193–9211 (2022). https://doi.org/10.1007/s10489-021-02752-1
+    Huang, C., Bai, H. & Yao, X. Online algorithm configuration for differential evolution algorithm. Appl Intell 52, 9193–9211 (2022), DOI: [10.1007/s10489-021-02752-1](https://doi.org/10.1007/s10489-021-02752-1)
 
 2. Or copy the folloing BibTex file:
 
@@ -50,8 +50,3 @@ The performance of evolutionary algorithms (EAs) is strongly affected by their c
 ## Contact
 
 [Asst. Prof. Changwu HUANG](https://faculty.sustech.edu.cn/huangcw3/en/)
-
-## References
-
-[Click here to view the test functions defined in *bbob2015* benchmark.](
-    http://numbbo.github.io/coco/testsuites/bbob)
