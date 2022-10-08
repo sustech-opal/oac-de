@@ -27,7 +27,7 @@ print(long_description)
 # set PyPI information
 setup(
     name='oacde',
-    version='1.0.0',
+    version='1.0.1',
     url='https://github.com/sustech-opal/oac-de',
     author='Changwu Huang, Hao Bai and Xin Yao',
     author_email='huangcw3@sustech.edu.cn',
