@@ -26,12 +26,11 @@ Automatic algorithm configuration, Differential evolution algorithm, Adaptive pa
 
 [Click here to read the full tutorial.](https://github.com/sustech-opal/oac-de/blob/main/tutorial.ipynb)
 
-
 ## Citation
 
 1. You may cite this work in a scientific context as:
 
-    Huang, C., Bai, H. & Yao, X. Online algorithm configuration for differential evolution algorithm. Appl Intell 52, 9193–9211 (2022), DOI: [10.1007/s10489-021-02752-1](https://doi.org/10.1007/s10489-021-02752-1)
+    C. Huang, H. Bai and X. Yao, "Online algorithm configuration for differential evolution algorithm", Applied Intelligence, 2022, vol. 52, no. 8, pp. 9193–9211, doi: [10.1007/s10489-021-02752-1](https://doi.org/10.1007/s10489-021-02752-1)
 
 2. Or copy the folloing BibTex file:
 
@@ -42,14 +41,18 @@ Automatic algorithm configuration, Differential evolution algorithm, Adaptive pa
     journal = {Applied Intelligence},
     volume  = {52},
     number  = {8},
-    pages   = {9193--9211},
+    pages   = {9193-9211},
     year    = {2022},
-    url     = {https://doi.org/10.1007/s10489-021-02752-1}
+    url     = {https://link.springer.com/article/10.1007/s10489-021-02752-1},
     doi     = {10.1007/s10489-021-02752-1},
     }
     ```
 
 3. Or [download the citation in RIS file.](https://citation-needed.springer.com/v2/references/10.1007/s10489-021-02752-1?format=refman&flavour=citation)
+
+## Related work
+
+[Adaptive Differential Evolution based on Exploration and Exploitation Control (AEEC-DE)](https://pypi.org/project/aeecde/)
 
 ## Contact
 

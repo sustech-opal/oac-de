@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 ''' Copyright 2022 Changwu Huang, Hao Bai and Xin Yao
 
-    [TUTORIAL] Validation of modules and functions
+    Validation of modules and functions
 '''
 import time
 import oacde
@@ -35,7 +35,7 @@ config = oacde.publics.parameterize.DE(seed = seed,
                                        )
 print(config)
 print("As well as stop conditions:")
-stop = oacde.publics.parameterize.StopCondition(max_FES=1000.*NP, max_iter=None, delta_ftarget=1e-8)
+stop = oacde.publics.parameterize.StopCondition(max_FES=1e3*NP, max_iter=None, delta_ftarget=1e-8)
 print(stop)
 
 
@@ -68,7 +68,7 @@ optimizer = oacde.OACDE(opt_problem=problem,
                         epsilon=0.2,
                         temperature=None,
                         sliding_window_size=None, # required for
-                                                # "sliding_window_average"
+                                                  # "sliding_window_average"
                         )
 print("You can solve the optimization problem by running `solve()` method. "
     "If you want to follow the result step by step, you can set "
@@ -77,12 +77,14 @@ results = optimizer.solve()
 #! -----------------------------------------------------------------------------
 tok = time.time()
 
+
 ## 4. (Optional) Save results to disk
 print("\n--- Step 4 (Optional)")
 print("If you want to save the results permanently, you can use `save()` "
     "method. It will save the configurations, the stop conditions, "
     "the iteration history, and the final optimum to a json file.")
 optimizer.save()
+
 
 ## 5. (Optional) Post-processing
 print("\n--- Step 5 (Optional)")
@@ -91,5 +93,6 @@ print("\tElapsed Time: {:.2f}s".format(tok-tik))
 print("\tCalculated results:", results)
 print("\tTheoretical optimal value:", problem.f_opt_theory)
 print("\tRelative error:", results[1]-problem.f_opt_theory)
+print("\tEvolved Generations:", optimizer.data.get("nth_hist")[-1])
 
 print(optimizer.history)
