@@ -26,7 +26,7 @@ long_description = (this_directory / "README.md").read_text(encoding='utf-8')
 # set PyPI information
 setup(
     name='oacde',
-    version='1.0.1',
+    version='1.0.2',
     url='https://github.com/sustech-opal/oac-de',
     author='Changwu Huang, Hao Bai and Xin Yao',
     author_email='huangcw3@sustech.edu.cn',
